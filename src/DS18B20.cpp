@@ -104,6 +104,8 @@ uint8_t DS18B20::getResolution() {
         case RES_12_BIT:
             return 12;
     }
+    
+    return 9;
 }
 
 void DS18B20::setResolution(uint8_t resolution) {
