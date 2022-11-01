@@ -60,7 +60,10 @@ void DS18B20::resetSearch() {
     lastDevice = 0;
 }
 
-float DS18B20::getTempC() {
+float DS18B20::getTempC(bool forceSetAddr) {
+    if (forceSetAddr)
+        select(searchAddress);
+
     sendCommand(MATCH_ROM, CONVERT_T, !selectedPowerMode);
     delayForConversion(selectedResolution, selectedPowerMode);
     readScratchpad();
@@ -89,8 +92,8 @@ float DS18B20::getTempC() {
     return temp / 16.0;
 }
 
-float DS18B20::getTempF() {
-    return getTempC() * 1.8 + 32;
+float DS18B20::getTempF(bool forceSetAddr) {
+    return getTempC(forceSetAddr) * 1.8 + 32;
 }
 
 uint8_t DS18B20::getResolution() {
